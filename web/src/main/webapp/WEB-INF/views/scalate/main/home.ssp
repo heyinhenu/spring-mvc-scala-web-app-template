@@ -1,5 +1,0 @@
-#import(name.dargiri.data.dto.PersonDTO)
-<%@ val person: PersonDTO %>
-<p>
-    Hello, <%=person.username%>!
-</p>
