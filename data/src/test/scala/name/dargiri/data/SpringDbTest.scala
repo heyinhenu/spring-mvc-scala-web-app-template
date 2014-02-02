@@ -11,7 +11,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition
  * Created by dionis on 2/1/14.
  */
 @ContextConfiguration(locations = Array("classpath:test-config.xml"))
-abstract class SpringDbTest extends FlatSpec with Matchers with BeforeAndAfter with OptionValues {
+abstract class SpringDbTest extends FlatSpec with Matchers with BeforeAndAfter {
   @PersistenceContext
   val em: EntityManager = null
   @Autowired
@@ -31,5 +31,10 @@ abstract class SpringDbTest extends FlatSpec with Matchers with BeforeAndAfter w
     println("Rolling back transaction")
     txManager.rollback(transaction)
     println("Transaction roled back")
+  }
+
+  def flushAndClear() : Unit = {
+    em.flush()
+    em.clear()
   }
 }

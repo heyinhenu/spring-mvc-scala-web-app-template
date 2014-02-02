@@ -12,7 +12,7 @@ class PersonDAOImplTest extends SpringDbTest {
   dao.entityManager = em
 
   "Person" should "have id assigned when created" in {
-    val entity: Person = new Person()
+    val entity = new Person()
     entity.username = "dionis"
     dao.persist(entity)
 
@@ -20,24 +20,42 @@ class PersonDAOImplTest extends SpringDbTest {
   }
 
   it should "be found by id after persisting" in {
-    val entity: Person = new Person()
+    val entity = new Person()
     entity.username = "dionis"
     dao.persist(entity)
 
     assert(entity.id !== null)
+    flushAndClear()
 
     val found: Option[Person] = dao.find(entity.id)
     found should equal (Some(entity))
   }
 
   it should "not be found by id if not found" in {
-    val entity: Person = new Person()
+    val entity = new Person()
     entity.username = "dionis"
     dao.persist(entity)
 
     assert(entity.id !== null)
 
+    flushAndClear()
+
     val found: Option[Person] = dao.find(UUID.randomUUID())
     found should equal (None)
+  }
+
+  "Find all" should "return al persisted" in {
+    val e1 = new Person
+    val e2 = new Person
+    dao.persist(e1)
+    dao.persist(e2)
+
+    flushAndClear()
+
+    val result: Seq[Person] = dao.findAll
+
+    result should have size (2)
+    result should contain (e1)
+    result should contain (e2)
   }
 }
