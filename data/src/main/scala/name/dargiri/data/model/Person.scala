@@ -19,19 +19,4 @@ class Person extends Model[UUID] {
   override def assignId(): Unit = {
     id = UUID.randomUUID()
   }
-
-
-  def canEqual(other: Any): Boolean = other.isInstanceOf[Person]
-
-  override def equals(other: Any): Boolean = other match {
-    case that: Person =>
-      (that canEqual this) &&
-        id == that.id
-    case _ => false
-  }
-
-  override def hashCode(): Int = {
-    val state = Seq(id)
-    state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
-  }
 }
