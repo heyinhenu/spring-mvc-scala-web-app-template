@@ -16,3 +16,5 @@ It has 4 modules:
 4. web-app-launcher - is a helper module that's used for using ide-based Launcher (see Launcher class).
 
 In order to create war execute following command: mvn -P=build clean package
+
+P.S. I prefer to use IntelliJ IDEA IDE with Scala plugin installed.
